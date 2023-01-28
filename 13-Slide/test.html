@@ -1,0 +1,251 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!--<style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+          }
+        
+          #controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            height: 50px;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          }
+        
+          #controls input[type=color],
+          #controls input[type=range] {
+            width: 100px;
+            height: 50px;
+          }
+        
+          #controls input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 150px;
+            background: linear-gradient(to right, #3498db 0%, #3498db 100%);
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+          }
+        
+          #controls input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+        
+          #controls input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+        
+          #controls button {
+            width: 100px;
+            height: 50px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        
+          #controls button:hover {
+            background-color: #2980b9;
+          }
+        
+          #drawing {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          }
+          
+    </style> -->
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+          }
+        
+          #controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 500px;
+            height: 50px;
+            margin-bottom: 20px;
+            background-color: #555;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          }
+        
+          #controls input[type=color],
+          #controls input[type=range] {
+            width: 100px;
+            height: 50px;
+          }
+        
+          #controls input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 150px;
+            background: linear-gradient(to right, #8e44ad 0%, #8e44ad 100%);
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+          }
+        
+          #controls input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+        
+          #controls input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+        
+          #controls button {
+            width: 100px;
+            height: 50px;
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        
+          #controls button:hover {
+            background-color: #7e3d99;
+          }
+        
+          #drawing {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #444;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          }
+        
+          #drawing svg {
+            width: 100%;
+            height: 100%;
+          }
+        
+    </style>
+
+    
+  </head>
+  <body>
+    <div id="controls">
+    <label for="color">Color:</label>
+    <input type="color" id="color" value="#000000">
+    <label for="width">Width:</label>
+    <input type="range" id="width" min="1" max="50" value="1">
+    <button id="clear">Clear</button>
+  </div>
+  
+  <div id="drawing">
+    <!-- This is where the drawing will appear -->
+  </div>
+  
+
+  <script>
+    const controls = document.getElementById('controls');
+const drawing = document.getElementById('drawing');
+const colorInput = document.getElementById('color');
+const widthInput = document.getElementById('width');
+const clearButton = document.getElementById('clear');
+
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let currentColor = '#000000';
+let currentWidth = 1;
+
+controls.addEventListener('input', (event) => {
+  if (event.target === colorInput) {
+    currentColor = event.target.value;
+  } else if (event.target === widthInput) {
+    currentWidth = event.target.value;
+  }
+});
+
+clearButton.addEventListener('click', () => {
+  drawing.innerHTML = '';
+});
+
+drawing.addEventListener('mousedown', (event) => {
+  isDrawing = true;
+  lastX = event.offsetX;
+  lastY = event.offsetY;
+});
+
+drawing.addEventListener('mouseup', () => {
+  isDrawing = false;
+});
+
+drawing.addEventListener('mousemove', (event) => {
+  if (isDrawing) {
+    const currentX = event.offsetX;
+    const currentY = event.offsetY;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', lastX);
+    line.setAttribute('y1', lastY);
+    line.setAttribute('x2', currentX);
+    line.setAttribute('y2', currentY);
+    line.setAttribute('stroke', currentColor);
+    line.setAttribute('stroke-width', currentWidth);
+
+    drawing.appendChild(line);
+
+    lastX = currentX;
+    lastY = currentY;
+  }
+});
+
+  </script>
+  </body>
+  </html>

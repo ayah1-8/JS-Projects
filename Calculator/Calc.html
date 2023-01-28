@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background: #EAEBEC;
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+}
+
+.calc-body {
+  width: 275px;
+  margin: auto;
+  min-height: 400px;
+  border: solid 1px #3A4655;
+  box-shadow: 0 8px 50px -7px black;
+}
+
+.calc-screen {
+  background: #3A4655;
+  width: 100%;
+  height: 150px;
+  padding: 20px;
+}
+
+.previousValue {
+  text-align: right;
+  color: #727B86;
+  font-size: 21px;
+  padding-bottom: 10px;
+  border-bottom: dotted 1px;
+}
+
+.currentNumber {
+  margin-top: 20px;
+  font-size: 45px;
+  text-align: right;
+  color: #fff;
+}
+
+.calc-button-row {
+  width: 100%;
+  background: #3C4857;
+}
+
+.button {
+  width: 25%;
+  background: #425062;
+  color: #fff;
+  padding: 20px;
+  display: inline-block;
+  font-size: 25px;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: -4px;
+  border-right: solid 2px #3C4857;
+  border-bottom: solid 2px #3C4857;
+  transition: all 0.2s ease-in-out;
+}
+
+.button.l {
+  color: #AEB3BA;
+  background: #404D5E;
+}
+
+.button.c {
+  color: #D95D4E;
+  background: #404D5E;
+}
+
+.button:hover {
+  background: #E0B612;
+  transform: rotate(5deg);
+}
+
+.button.c:hover,
+.button.l:hover {
+  background: #E0B612;
+  color: #fff;
+}
+
+.blink-me {
+  color: #E0B612;
+}
+    </style>
+</head>
+<body>
+    
+<div class="container">
+  <div class="calc-body">
+    <div class="calc-screen">
+      <div class="previousValue"></div>
+      <div class="currentNumber">0</div>
+    </div>
+    <div class="calc-button-row">
+      <div class="button c" data-key="C">C</div>
+      <div class="button op" data-key="">≠</div>
+      <div class="button op" data-key="%">%</div>
+      <div class="button op" data-key="/">/</div>
+    </div>
+    <div class="calc-button-row">
+      <div class="button num" data-key="7">7</div>
+      <div class="button num" data-key="8">8</div>
+      <div class="button num" data-key="9">9</div>
+      <div class="button op" data-key="x">x</div>
+    </div>
+    <div class="calc-button-row">
+      <div class="button num" data-key="4">4</div>
+      <div class="button num" data-key="5">5</div>
+      <div class="button num" data-key="6">6</div>
+      <div class="button op" data-key="-"> - </div>
+    </div>
+    <div class="calc-button-row">
+      <div class="button num" data-key="1">1</div>
+      <div class="button num" data-key="2">2</div>
+      <div class="button num" data-key="3">3</div>
+      <div class="button op" data-key="+">+</div>
+    </div>
+    <div class="calc-button-row">
+      <div class="button num" data-key=".">.</div>
+      <div class="button num" data-key="0">0</div>
+      <div class="button del" data-key="<"><</div>
+    <div class="button eq" data-key="=">=</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+<script>
+    class Calculator{
+        constructor(previousValueText,currentNumberText)
+        {
+            this.previousValueText = previousValueText
+            this.currentNumberText = currentNumberText
+            this.clear()
+        }
+
+        clear()
+        {
+            this.previousValue = ''
+            this.currentNumber = ''
+            this.operation = undefined;
+
+        }
+
+        deleteNumber()
+        {
+            this.currentNumber = this.currentNumber.toString().slice(0,-1);
+        }
+
+        appendNumber(number)
+        {
+            if(number ==='.' && this.currentNumber.includes('.')) return;
+            this.currentNumber = this.currentNumber.toString() + number.toString();
+        }
+
+        operationtype(operation)
+        {
+            if(this.currentNumber==='') return
+            if(this.previousValue!=='') {this.calculate()}
+            this.operation = operation;
+            this.previousValue = this.currentNumber;
+            this.currentNumber =''; 
+            
+        }
+
+        calculate()
+        {
+            let total
+            if(isNaN(this.previousValue) || isNaN(this.currentNumber)) return
+            switch(this.operation) {
+                case '+':
+                total = parseFloat(this.previousValue) + parseFloat(this.currentNumber);
+                break;
+                case '-':
+                total = parseFloat(this.previousValue) - parseFloat(this.currentNumber);    
+                break;
+                case 'x':
+                total = parseFloat(this.previousValue) * parseFloat(this.currentNumber)
+                break;
+                case '/':
+                total = parseFloat(this.previousValue) / parseFloat(this.currentNumber);
+                break;
+                case '%':
+                total = parseFloat(this.previousValue) % parseFloat(this.currentNumber);
+                break;
+                default: return
+                } 
+                this.currentNumber = total
+                this.operation = undefined
+                this.previousValue=''
+        }
+
+        displayNumber()
+        {
+            this.currentNumberText.innerText = this.currentNumber;
+            if(this.operation!==undefined)
+            {this.previousValueText.innerText = `${this.previousValue} ${this.operation}`;}
+            else
+            this.previousValueText.innerText = `${this.previousValue} `;
+        }
+    }
+    const previousValue = document.querySelector('.previousValue');
+    const currentNumber = document.querySelector('.currentNumber');
+    const numbers = Array.from(document.querySelectorAll('.num'));
+    const operations = Array.from(document.querySelectorAll('.op'));
+    const clear = document.querySelector('.c');
+    const deleteN = document.querySelector('.del');
+    const eq = document.querySelector('.eq');
+
+
+
+    const calculator = new Calculator(previousValue,currentNumber);
+
+    //numv=bers
+    numbers.forEach(number=> number.addEventListener('click',()=> 
+    {
+        calculator.appendNumber(number.innerText);
+        calculator.displayNumber();
+    }
+        ));
+    //operations
+    operations.forEach(operation=> operation.addEventListener('click',()=>{
+        calculator.operationtype(operation.innerText);
+        calculator.displayNumber();
+
+    }));
+    //equal
+    eq.addEventListener('click',()=> {
+        calculator.calculate();
+        calculator.displayNumber();
+    });
+
+    //clear
+    clear.addEventListener('click',()=> {
+        calculator.clear();
+        calculator.displayNumber();
+    });
+
+    //delete
+    deleteN.addEventListener('click',()=> {
+        calculator.deleteNumber();
+        calculator.displayNumber();
+    });
+</script>
+</html>

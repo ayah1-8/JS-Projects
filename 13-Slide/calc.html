@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>Giant Calculator</title>
+    <style>
+      /* Add some style to the page */
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+      }
+
+      /* Style the calculator container */
+      .calculator {
+        width: 500px;
+        height: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Style the display */
+      .calculator .display {
+        width: 100%;
+        height: 100px;
+        background-color: #ddd;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-size: 3em;
+        text-align: right;
+        padding: 20px;
+      }
+
+      /* Style the button grid */
+      .calculator .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+        padding: 5px;
+      }
+
+      /* Style the buttons */
+      .calculator .buttons button {
+        width: 100%;
+        height: 50px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.5em;
+        cursor: pointer;
+      }
+
+      .calculator .buttons button:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Create the calculator container -->
+    <div class="calculator">
+      <!-- Create the display -->
+      <div class="display" id="display">0</div>
+      <!-- Create the button grid -->
+      <div class="buttons">
+        <button id="clear">AC</button>
+        <button id="divide">/</button>
+        <button id="multiply">*</button>
+        <button id="subtract">-</button>
+        <button id="seven">7</button>
+        <button id="eight">8</button>
+        <button id="nine">9</button>
+        <button id="add">+</button>
+        <button id="four">4</button>
+        <button id="five">5</button>
+        <button id="six">6</button>
+        <button id="one">1</button>
+        <button id="two">2</button>
+        <button id="three">3</button>
+        <button id="zero">0</button>
+        </div>
+</body>
+</html>

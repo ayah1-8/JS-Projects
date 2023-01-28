@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Updating CSS Variables with <span class="hi">JS</span> </h2>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+
+        <label for="base">Base Color:</label>
+        <input type="color" name="base" value="#ffffff">
+
+
+
+    </div>
+    <div class="image">
+        <img src="test.jpg" alt="">
+
+    </div>
+
+    <style>
+        :root {
+            --base: #ff3472;
+            --spacing: 10px;
+            --blur: 10px;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+        }
+
+        body {
+            text-align: center;
+
+        }
+
+        body {
+            background: #182e50;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px;
+            font-weight: 100;
+
+        }
+
+        .controls {
+            margin-bottom: 50px;
+        }
+
+        img {
+            max-width: 70%;
+            max-height: 50%;
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+        }
+
+        .hi {
+            color: var(--base);
+        }
+    </style>
+    <script>
+
+        const controls = document.querySelectorAll('.controls input');
+
+        function handleUpdate() {
+            //console.log(this.value);
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`,this.value+ suffix);
+        }
+
+        controls.forEach(control => control.addEventListener('mousemove', handleUpdate));
+        controls.forEach(control => control.addEventListener('change', handleUpdate));
+    </script>
+</body>
+
+</html>

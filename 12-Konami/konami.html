@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- a sequence of arrows/ buttons where if there pressed smthn happens -->
+
+
+
+
+    <script>    
+        const pressed=[];
+        const secret ='ayah';
+        
+        document.addEventListener('keyup',(e)=>{
+            pressed.push(e.key);
+            console.log(pressed);
+
+            if (pressed.length > secret.length ? pressed.shift( ) : ' ');
+            if(pressed.join('').includes(secret)){console.log("HURRAAAHA!")}
+        });
+    </script>
+</body>
+</html>

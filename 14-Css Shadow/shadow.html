@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥WOAH</title>
+
+    <style> 
+        html {
+            color:black;
+            font-family: sans-serif;
+
+          }
+        .text {
+            min-height: 97vh;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            color:rgb(158, 46, 46);
+          }
+        h1 {
+            text-shadow: 10px 10px 0 rgb(60, 46, 46);
+            font-size: 100px;
+          }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="text">
+        <h1 >WOAH!🔥</h1>
+    </div>
+
+    <script>    
+
+        const textContainer = document.querySelector('.text');
+        const text = textContainer.querySelector('h1');
+        const dis = 50; //100px
+
+
+        function shadow(e)
+        {
+            const { offsetWidth: width, offsetHeight: height } = textContainer;
+            let{offsetX:x, offsetY:y}=e;
+
+            if(this!== e.target)
+            {
+                x = x+ e.offsetLeft;
+                y=y + e.offsetTop;
+            }
+            const xDis = Math.round((x / width * dis) - (dis / 2));
+            const yDis = Math.round((y / height * dis) - (dis / 2));
+
+            console.log(xDis,yDis);
+            text.style.textShadow = `
+            ${xDis}px ${yDis}px 0 rgba(255,0,255,0.7),
+            ${xDis * -1}px ${yDis}px 0 rgba(0,255,255,0.7),
+            ${yDis}px ${xDis * -1}px 0 rgba(0,255,0,0.7),
+            ${yDis * -1}px ${xDis}px 0 rgba(0,0,255,0.7)
+          `;
+        }
+        textContainer.addEventListener('mousemove',shadow);
+        </script>
+
+</body>
+</html>

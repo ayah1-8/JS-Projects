@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckBox</title>
+</head>
+
+<body>
+    <div class="inbox">
+        <div class="item">
+            <input type="checkbox">
+            <p> Do smthn beneficial</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p> water my plant</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p> study hard</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p> feed my cat</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p> straighten my hair</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p> Cook Lunch</p>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        const chkboxes = document.querySelectorAll('.inbox input[type = "checkbox"]');
+        let checkboxes = Array.from(chkboxes);
+        let lastSelected = null;
+
+        //my way
+        function handleCheck(e) {
+            if (lastSelected && e.ctrlKey) {
+                let first = checkboxes.indexOf(lastSelected);
+                let last = checkboxes.indexOf(this);
+
+                checkboxes.filter(box1 => (checkboxes.indexOf(box1) > first && checkboxes.indexOf(box1) < last) ||
+                    (checkboxes.indexOf(box1) < first && checkboxes.indexOf(box1) > last)
+                )
+                    .forEach(box1 => box1.checked = true)
+
+            }
+            lastSelected = this;
+        }
+
+        //another easiiierrr shorter way
+                 functionhandleCheck2(e)
+                {
+                    let inBeween = false; //to track if were inside the loop to be checked
+                    if (this.checked && e.ctrlKey) {
+                        //loop thru all checkboxes
+                        chkboxes.forEach(chkbox => {
+                            if (chkboxes == this || chkbox == lastSelected) {
+                                inBeween = !inBeween;
+                                console.log('checking between')
+                            }
+                            if (inBeween) { chkbox.checked = true; }
+                        });
+                    }
+
+                    lastSelected = this;
+                } 
+
+
+        //listerer to every checkbox for any changes
+        chkboxes.forEach(box => box.addEventListener('click', handleCheck))
+        //click is better than change. can track ctrl/sift and alt keys
+    </script>
+</body>
+
+</html>

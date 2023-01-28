@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="controls">
+        <input type="color" name="color" id="color">
+        <label for="color">Pick Color</label>
+        
+        <input type="range" name="Size" id="size" min="1" max="100" value="10" data-sizing="px">
+        <label for="Size">Choose Size</label>        
+
+        <input type="color" name="bgcolor" id="bgcolor">
+        <label for="color">Pick BackGround Color</label>
+
+        <input type="button" name="Clear" id="Clear" value="Clear">
+    </div>
+
+    <div class="draw">
+        <canvas width=700 height=350></canvas>
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        html {
+            background: #242d4f url('wow.jpg');
+            background-size: cover;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        body {
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+        }
+
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            border: 15px solid #925a9e;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .circle {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px);
+        }
+
+        .hand {
+            top: 50%;
+            width: 50%;
+            height: 6px;
+            position: absolute;
+            background: #925a9e;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.02, 1.59, 0, 1.61);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="clock">
+        <div class="circle">
+            <div class="hand hr-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand sec-hand"></div>
+        </div>
+    </div>
+
+<script>
+    SecondHand =document.querySelector('.sec-hand');
+    MinHand =document.querySelector('.min-hand');
+    HrHand =document.querySelector('.hr-hand');
+
+function SetDate()
+{
+const now = new Date();
+const seconds = now.getSeconds();
+const SecondDegree = ((seconds/60)*360)+90;
+SecondHand.style.transform="rotate("+ SecondDegree+ "deg)";
+
+const mins = now.getMinutes();
+const MinDegree = ((mins/60)*360)+90;
+MinHand.style.transform="rotate("+ MinDegree+ "deg)";
+
+const hrs = now.getHours();
+const HrDegree = ((hrs/12)*360)+90;
+HrHand.style.transform="rotate("+ HrDegree+ "deg)";
+
+}
+    
+    setInterval(SetDate,1000);
+</script>
+</body>
+
+</html>

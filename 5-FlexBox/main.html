@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool</title>
+</head>
+
+<body>
+    <div class="panels">
+        <div class="panel panel1">
+            <p>Artist</p>
+            <p>Guernica</p>
+            <p>Year</p>
+        </div>
+
+        <div class="panel panel2">
+            <p>Artist</p>
+            <p>The Last Supper</p>
+            <p>Year</p>
+        </div>
+
+        <div class="panel panel3">
+            <p>Artist</p>
+            <p>MonaLisa</p>
+            <p>Year</p>
+        </div>
+
+        <div class="panel panel4">
+            <p>Artist</p>
+            <p>The Scream</p>
+            <p>Year</p>
+        </div>
+
+        <div class="panel panel5">
+            <p>Artist</p>
+            <p>The Starry Night</p>
+            <p>Year</p>
+        </div>
+
+
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+        html {
+            background: #572a3c;
+            font-weight: 200;
+            font-size: 20px;
+            font-family: Helvetica;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        .panels {
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .panel {
+
+            background: #6B0F9C;
+            color: white;
+            display: -webkit-box;
+            box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
+            transition: font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+            flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+            background 0.2s;
+            display: flex;
+            flex: 1;
+            font-size: 40px;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+            /* Flex Items */
+
+        .panel > * {
+            margin: 0;
+            width: 100%;
+            transition: transform 0.5s;
+            flex: 1 0 auto;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .panel p {
+            text-transform: uppercase;
+            font-family: 'Amatic SC', cursive;
+            text-shadow: 0 0 4px rgba(0,0,0,0.72), 0 0 14px rgba(0,0,0,0.45);
+        }
+       
+        .panel > *:first-child{transform: translateY(-100%);}
+        .panel.open-active > *:first-child{transform: translateY(0);}
+        .panel > *:last-child{transform: translateY(100%);}
+        .panel.open-active > *:last-child{transform: translateY(0);}
+
+
+        .panel1 {background-image: url('images/Gernika.jpg');}
+        .panel2 {background-image: url('images/The-Last-Supper.jpg');}
+        .panel3 {background-image: url('images/mona-lisa.jpg');}
+        .panel4 {background-image: url('images/the scream.jfif');}
+        .panel5 {background-image: url('images/starry night.jfif'); }
+
+        .panel.open {
+            flex: 5;
+            font-size: 50px;
+        }
+
+        .panel.hover {
+            flex: 2;
+        }
+
+    </style>
+
+    <script>
+        const panels = document.querySelectorAll('.panel');
+
+        function toggleOpen()
+        {
+            this.classList.toggle('open')
+        }
+        function toggleActive(e) {
+            if (e.propertyName.includes('flex')) {
+                this.classList.toggle('open-active');
+            }
+        }
+        function toggleHover()
+        {
+            this.classList.toggle('hover')
+        }
+
+        panels.forEach(panel=>panel.addEventListener('click',toggleOpen));
+        panels.forEach(panel=>panel.addEventListener('mouseover',toggleHover));
+
+        panels.forEach(panel=>panel.addEventListener('transitionend',toggleActive));
+
+    </script>
+</body>
+
+</html>
