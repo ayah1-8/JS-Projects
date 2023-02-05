@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game!</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        button
+        {
+            background-color: rgb(43,72,201);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            font-size: large;
+            border: none;
+            border-radius: 13%;
+            outline: none;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            
+        }
+        input
+        {
+            padding:15px;
+            font-size: 1.5rem;
+            display: block;
+            margin-top:10px ;
+            margin-left:auto ;
+            margin-right:auto ;
+            width: 70%;            
+        }
+
+        #main-heading{
+            text-align: center;
+        }
+
+        #text-display{
+            text-align: center;
+            font-size: 24px;
+            font-weight: 20px;
+            font-style: italic;
+        }
+
+        #stats{
+            margin-left: auto;
+            margin-right: auto;
+            width:fit-content;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <article id="stats" class="hide">
+            <p>WPM: <span id="wpm-display"></span></p>        
+            <p>Score: <span id="score-display"></span></p>        
+            <p>Time Left: <span id="time-display"></span></p>        
+        </article>
+        <h1 id="main-heading">Speed Typing Score!</h1>
+    </header>
+    <main>
+        <section id="main-section">
+            <article id="main-content"></article>
+
+            <button id="button">Start Game</button>
+
+            <article id="text-display"></article>
+
+            <form id="form">
+                <input type="text" id="input" class="hide">
+
+            </form>
+        </section>
+    </main>
+<script src="Words.js"></script>
+    <script>    
+
+        const startGameButton = document.querySelector("#button")
+        const input = document.querySelector("#input")
+        const stats = document.querySelector("#stats")
+        const displayWord = document.querySelector("#text-display");
+        const mainContent = document.querySelector("#main-content");
+        const form = document.querySelector("#form");
+        const slicedWords  = alice.split(' ');
+
+        startGameButton.addEventListener('click',ButtonClick);
+        form.addEventListener('submit',function(event){
+
+            const userInput = input.value;
+            const isCorrect = userInput === state.currentWord;
+            let span;
+
+            //if inpput empty then do notthing
+            if(userInput ==='') return;
+
+            if(isCorrect)              //green
+            {span = createSpan('greenyellow', userInput);}
+            else                       //red
+            {span = createSpan('red', userInput);}
+            mainContent.appendChild(span);
+
+            //CLEAR current input and generate next word to display
+            input.value ='';
+            nextWord();
+        });
+
+        //saving cuurent word for comparision
+        const state = {
+            currentWord : ''
+        }
+
+        //creating span for the word that is tped and compared
+        function createSpan(color,word)
+        {
+            const span = document.createElement('span');
+            const style = 'background-colr: '+color;
+            span.textContent = word;
+            span.setAttribute('style',style);
+            return span;
+        }
+
+        //randomizing a word from the list of words
+        function getRandomWord()
+        {
+            return slicedWords[Math.floor(Math.random()*slicedWords.length)];
+        }
+
+        //function for the ext word :)
+        function nextWord()
+        {
+            const word = getRandomWord();
+            displayWord.textContent = word;
+            state.currentWord = word;
+        }
+
+        //events for when the button is clicked
+        function ButtonClick(event)
+        {
+            event.preventDefault();
+            startGameButton.classList.add('hide');
+            input.classList.remove('hide')
+            stats.classList.remove('hide')
+            input.focus();        
+            nextWord();
+
+        }
+
+
+    </script>
+</body>
+</html>
