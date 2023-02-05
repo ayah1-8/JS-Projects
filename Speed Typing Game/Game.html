@@ -54,6 +54,11 @@
         .hide{
             display: none;
         }
+        .typed-word
+        {
+            padding:5px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -88,11 +93,23 @@
         const displayWord = document.querySelector("#text-display");
         const mainContent = document.querySelector("#main-content");
         const form = document.querySelector("#form");
+        const wpmDisplay = document.querySelector("#wpm-display");
+        const scoreDisplay = document.querySelector("#score-display");
+        const timeDisplay = document.querySelector("#time-display");
+
         const slicedWords  = alice.split(' ');
 
+
+        //saving cuurent word for comparision
+        const state = {
+            currentWord : '',
+            score:0,
+            timeElapsed:0,
+            gameLength:30,     //30secs
+        }
         startGameButton.addEventListener('click',ButtonClick);
         form.addEventListener('submit',function(event){
-
+            event.preventDefault();
             const userInput = input.value;
             const isCorrect = userInput === state.currentWord;
             let span;
@@ -101,7 +118,9 @@
             if(userInput ==='') return;
 
             if(isCorrect)              //green
-            {span = createSpan('greenyellow', userInput);}
+            {span = createSpan('greenyellow', userInput);
+            state.score++;
+        }
             else                       //red
             {span = createSpan('red', userInput);}
             mainContent.appendChild(span);
@@ -109,20 +128,20 @@
             //CLEAR current input and generate next word to display
             input.value ='';
             nextWord();
+            renderStats()
+
         });
 
-        //saving cuurent word for comparision
-        const state = {
-            currentWord : ''
-        }
+
 
         //creating span for the word that is tped and compared
         function createSpan(color,word)
         {
             const span = document.createElement('span');
-            const style = 'background-colr: '+color;
+            const style = 'background-color: '+color;
             span.textContent = word;
             span.setAttribute('style',style);
+            span.setAttribute('class','typed-word');
             return span;
         }
 
@@ -149,9 +168,26 @@
             stats.classList.remove('hide')
             input.focus();        
             nextWord();
-
+            startClock();
         }
 
+        function renderStats(){
+            wpmDisplay.textContent = (state.score / (state.timeElapsed/60)).toFixed(2);
+            scoreDisplay.textContent = state.score;
+            timeDisplay.textContent = state.gameLength - state.timeElapsed;
+        }
+        function startClock()
+        {
+            setInterval(function()
+            {
+                console.log(state.timeElapsed, state.gameLength)
+                state.timeElapsed+=1;
+                renderStats();
+                if(state.timeElapsed === state.gameLength)
+                    {alert('Your Score is '+ state.score + '. Your WPM is ' + wpmDisplay.textContent);
+                window.location.reload();}
+                },1000)
+        }
 
     </script>
 </body>
