@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Scores</title>
+
+    <style>
+        ul{
+            padding-left: 0;
+        }
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .d-block{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">
+        My High Scores (WPM)
+    </h1>
+
+    <ul class="text-center" id="highscores">
+
+    </ul>
+
+    <a class="text-center d-block" href="Game.html"><button>Go Back</button></a>
+
+    <script>
+        const highscores = document.getElementById("highscores");
+        let scores = JSON.parse(localStorage.getItem("highscores")) || [];
+        scores = scores.sort().reverse();
+
+        function createListItem(content)
+        {
+            const li = document.createElement('li');
+            li.textContent = content;
+            return li;
+        }
+        for(let index = 0; index< scores.length;index++)
+        {
+            //crete list item
+            const li = createListItem('(' + String(index +1) + ') ' + scores[index]);
+            //append list item to ul
+            highscores.appendChild(li);
+        }
+    </script>
+</body>
+</html>

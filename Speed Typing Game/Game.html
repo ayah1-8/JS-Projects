@@ -59,6 +59,9 @@
             padding:5px;
             display: inline-block;
         }
+        a{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -75,6 +78,8 @@
             <article id="main-content"></article>
 
             <button id="button">Start Game</button>
+            <a href='HighScores.html'><button id="highscores" >High Scores</button>
+            </a>
 
             <article id="text-display"></article>
 
@@ -88,6 +93,7 @@
     <script>    
 
         const startGameButton = document.querySelector("#button")
+        const highScoresButton = document.querySelector("#highscores")
         const input = document.querySelector("#input")
         const stats = document.querySelector("#stats")
         const displayWord = document.querySelector("#text-display");
@@ -164,6 +170,7 @@
         {
             event.preventDefault();
             startGameButton.classList.add('hide');
+            highScoresButton.classList.add('hide');
             input.classList.remove('hide')
             stats.classList.remove('hide')
             input.focus();        
@@ -185,6 +192,14 @@
                 renderStats();
                 if(state.timeElapsed === state.gameLength)
                     {alert('Your Score is '+ state.score + '. Your WPM is ' + wpmDisplay.textContent);
+                
+                const scores = JSON.parse(localStorage.getItem('highscores')) || [];
+                scores.push(wpmDisplay.textContent);
+                scores.sort();
+                if(scores.length>10){
+                    scores.shift();
+                }
+                localStorage.setItem('highscores',JSON.stringify(scores));
                 window.location.reload();}
                 },1000)
         }
